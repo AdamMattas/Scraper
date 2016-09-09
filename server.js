@@ -64,7 +64,7 @@ app.get('/scrape', function(req, res) {
     // then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(html);
     // now, we grab every h2 within an article tag, and do the following:
-    $('article .cd__wrapper .cd__content .cd__auxiliary').each(function(i, element) {
+    $('article .cd__wrapper .cd__content .cd__description').each(function(i, element) {
 
         // save an empty result object
         var result = {};
@@ -74,8 +74,8 @@ app.get('/scrape', function(req, res) {
         result.title = $(this).parent().children('.cd__headline').children('a').children('span.cd__headline-text').text();
         result.link = $(this).parent().prev().children('a').attr('href');
         result.image = $(this).parent().prev().children('a').children('img.media__image').attr('data-src-medium');
-        result.auxiliary = $(this).text();
-        result.description = $(this).next().text();
+        result.auxiliary = $(this).prev().text();
+        result.description = $(this).text();
 
         console.log('HELLO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', result);
 
@@ -122,12 +122,84 @@ app.get('/articles', function(req, res){
 });
 
 // grab an article by it's ObjectId
+// app.get('/articles/:id', function(req, res){
+//   // using the id passed in the id parameter, 
+//   // prepare a query that finds the matching one in our db...
+//   Article.findOne({'_id': req.params.id})
+//   // and populate all of the notes associated with it.
+//   .populate('note')
+//   // now, execute our query
+//   .exec(function(err, doc){
+//     console.log(doc);
+//     // log any errors
+//     if (err){
+//       console.log(err);
+//     } 
+//     // otherwise, send the doc to the browser as a json object
+//     else {
+//       //res.json(doc);
+//       res.render('article', {
+//         doc: doc
+//       });
+//     }
+//   });
+// });
+
 app.get('/articles/:id', function(req, res){
   // using the id passed in the id parameter, 
   // prepare a query that finds the matching one in our db...
   Article.findOne({'_id': req.params.id})
   // and populate all of the notes associated with it.
-  .populate('note')
+  //.populate('note')
+  // now, execute our query
+  .exec(function(err, doc){
+    Note.find({'artId': req.params.id})
+
+    .exec(function(err, docNote){
+
+      console.log(doc, docNote);
+      // log any errors
+      if (err){
+        console.log(err);
+      } 
+      // otherwise, send the doc to the browser as a json object
+      else {
+        //res.json(doc);
+        res.render('article', {
+          doc: doc,
+          docNote: docNote
+        });
+      }
+
+    });
+  });
+});
+
+// grab an article by it's ObjectId
+app.get('/notes/:id', function(req, res){
+  // using the id passed in the id parameter, 
+  // prepare a query that finds the matching one in our db...
+  Note.findOne({'_id': req.params.id})
+  // and populate all of the notes associated with it.
+  // now, execute our query
+  .exec(function(err, doc){
+    // log any errors
+    if (err){
+      console.log(err);
+    } 
+    // otherwise, send the doc to the browser as a json object
+    else {
+      res.json(doc);
+    }
+  });
+});
+
+// grab an article by it's ObjectId
+app.get('/notes', function(req, res){
+  // using the id passed in the id parameter, 
+  // prepare a query that finds the matching one in our db...
+  Note.find({})
+  // and populate all of the notes associated with it.
   // now, execute our query
   .exec(function(err, doc){
     // log any errors
@@ -149,26 +221,14 @@ app.post('/articles/:id', function(req, res){
 
   // and save the new note the db
   newNote.save(function(err, doc){
+    console.log(doc);
     // log any errors
     if (err){
       console.log(err);
     } 
     // otherwise
     else {
-      // using the Article id passed in the id parameter of our url, 
-      // prepare a query that finds the matching Article in our db
-      // and update it to make it's lone note the one we just saved
-      Article.findOneAndUpdate({'_id': req.params.id}, {'note':doc._id})
-      // execute the above query
-      .exec(function(err, doc){
-        // log any errors
-        if (err){
-          console.log(err);
-        } else {
-          // or send the document to the browser
-          res.send(doc);
-        }
-      });
+      console.log(doc);
     }
   });
 });
@@ -189,6 +249,26 @@ app.get('/delete/:id', function(req, res) {
       console.log(removed);
       //res.send(removed);
       res.redirect('/articles');
+    }
+  });
+});
+
+// Delete One from the DB
+app.get('/delete/note/:id', function(req, res) {
+  // remove a note using the objectID
+  Note.remove({_id: req.params.id
+  }, function(err, removed) {
+    // log any errors from mongojs
+    if (err) {
+      console.log(err);
+      res.send(err);
+    } 
+    // otherwise, send the mongojs response to the browser.
+    // this will fire off the success function of the ajax request
+    else {
+      console.log(removed);
+      res.send(removed);
+      //res.redirect('/articles');
     }
   });
 });

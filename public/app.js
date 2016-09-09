@@ -55,7 +55,7 @@ $(document).on('click', 'p', function(){
 });
 
 // when you click the savenote button
-$(document).on('click', '#savenote', function(){
+$(document).on('click', '.savenote', function(){
   // grab the id associated with the article from the submit button
   var thisId = $(this).attr('data-id');
 
@@ -64,8 +64,9 @@ $(document).on('click', '#savenote', function(){
     method: "POST",
     url: "/articles/" + thisId,
     data: {
-      title: $('#titleinput').val(), // value taken from title input
-      body: $('#bodyinput').val() // value taken from note textarea
+      title: $('.titleinput').val(), // value taken from title input
+      body: $('.bodyinput').val(), // value taken from note textarea
+      artId: thisId
     }
   })
     // with that done
@@ -73,10 +74,10 @@ $(document).on('click', '#savenote', function(){
       // log the response
       console.log(data);
       // empty the notes section
-      $('#notes').empty();
+      $('.notes').empty();
     });
 
   // Also, remove the values entered in the input and textarea for note entry
-  $('#titleinput').val("");
-  $('#bodyinput').val("");
+  $('.titleinput').val("");
+  $('.bodyinput').val("");
 });

@@ -12,6 +12,10 @@ var NoteSchema = new Schema({
   // just a string
   body: {
     type:String
+  },
+  // just a string
+  artId: {
+    type:String
   }
 });
 
