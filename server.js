@@ -83,19 +83,24 @@ app.get('/scrape', function(req, res) {
         // Notice the (result):
         // This effectively passes the result object to the entry (and the title and link)
         var entry = new Article (result);
-
-        // now, save that entry to the db
-        entry.save(function(err, doc) {
-          // log any errors
-          if (err) {
-            console.log(err);
-          } 
-          // or log the doc
-          else {
-            console.log(doc);
+        console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', entry);
+        Article.count({'title': entry.title}, function (err, count){ 
+          if(count>0){
+              console.log('Already Exists !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+          }else{
+            // now, save that entry to the db
+            entry.save(function(err, doc) {
+              // log any errors
+              if (err) {
+                console.log(err);
+              } 
+              // or log the doc
+              else {
+                console.log(doc);
+              }
+            });
           }
-        });
-
+        }); 
 
     });
   });
@@ -257,6 +262,26 @@ app.get('/delete/:id', function(req, res) {
 app.get('/delete/note/:id', function(req, res) {
   // remove a note using the objectID
   Note.remove({_id: req.params.id
+  }, function(err, removed) {
+    // log any errors from mongojs
+    if (err) {
+      console.log(err);
+      res.send(err);
+    } 
+    // otherwise, send the mongojs response to the browser.
+    // this will fire off the success function of the ajax request
+    else {
+      console.log(removed);
+      res.send(removed);
+      //res.redirect('/articles');
+    }
+  });
+});
+
+// Delete One from the DB
+app.get('/note/manual', function(req, res) {
+  // remove a note using the objectID
+  Note.remove({_id: ""
   }, function(err, removed) {
     // log any errors from mongojs
     if (err) {

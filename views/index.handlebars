@@ -2,13 +2,15 @@
   <h1>Note Scraper</h1>
   <h2><i>If you can do this...the homework should be no problem.</i></h2>
   {{#each doc}}
-    <a href="/articles/{{this._id}}">
-      <img src="{{this.image}}">
-    </a>
-      <input class="titleinput" type="text" placeholder="Title">
-      <input class="bodyinput" type="text" placeholder="Body">
-      <a class="savenote" data-id="{{this._id}}">Post Comment</a>
-    <div class="notes">{{this.note}}</div>
-    <a class="articles" href="/delete/{{this._id}}" data-id="{{this._id}}">Delete Article</a>
+    <div>
+      <a href="/articles/{{this._id}}">
+        <img src="{{this.image}}">
+      </a>
+        <input class="titleinput" type="text" placeholder="Title">
+        <input class="bodyinput" type="text" placeholder="Body">
+        <a class="savenote" data-id="{{this._id}}">Post Comment</a>
+      <div class="notes">{{this.note}}</div>
+      <a class="articles" href="/delete/{{this._id}}" data-id="{{this._id}}">Delete Article</a>
+    </div>
   {{/each}}
 </div>
