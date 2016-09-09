@@ -7,6 +7,18 @@ $.getJSON('/articles', function(data) {
   }
 });
 
+// $(document).on('click', '.articles', function(){
+
+//   var thisId = $(this).attr('data-id');
+
+//   // now make an ajax call for the Article
+//   $.ajax({
+//     method: "GET",
+//     url: "/delete/" + thisId,
+//   }); 
+
+// });
+
 
 // whenever someone clicks a p tag
 $(document).on('click', 'p', function(){

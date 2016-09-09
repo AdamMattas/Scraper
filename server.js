@@ -50,12 +50,12 @@ var Article = require('./models/Article.js');
 
 // redirects user to /home
 app.get('/', function (req, res) {
-  res.redirect('/home');
+  res.redirect('/articles');
 });
 
-app.get('/home', function (req, res) {
-    res.render('index');
-});
+// app.get('/home', function (req, res) {
+//     res.render('index');
+// });
 
 // A GET request to scrape the echojs website.
 app.get('/scrape', function(req, res) {
@@ -82,19 +82,19 @@ app.get('/scrape', function(req, res) {
         // using our Article model, create a new entry.
         // Notice the (result):
         // This effectively passes the result object to the entry (and the title and link)
-        //var entry = new Article (result);
+        var entry = new Article (result);
 
         // now, save that entry to the db
-        // entry.save(function(err, doc) {
-        //   // log any errors
-        //   if (err) {
-        //     console.log(err);
-        //   } 
-        //   // or log the doc
-        //   else {
-        //     console.log(doc);
-        //   }
-        // });
+        entry.save(function(err, doc) {
+          // log any errors
+          if (err) {
+            console.log(err);
+          } 
+          // or log the doc
+          else {
+            console.log(doc);
+          }
+        });
 
 
     });
@@ -113,7 +113,10 @@ app.get('/articles', function(req, res){
     } 
     // or send the doc to the browser as a json object
     else {
-      res.json(doc);
+      //res.json(doc);
+      res.render('index', {
+        doc: doc
+      });
     }
   });
 });
@@ -171,9 +174,9 @@ app.post('/articles/:id', function(req, res){
 });
 
 // Delete One from the DB
-app.get('/delete', function(req, res) {
+app.get('/delete/:id', function(req, res) {
   // remove a note using the objectID
-  Article.remove({_id: "57cfccebf8ba1324d8db2037"
+  Article.remove({_id: req.params.id
   }, function(err, removed) {
     // log any errors from mongojs
     if (err) {
@@ -184,7 +187,8 @@ app.get('/delete', function(req, res) {
     // this will fire off the success function of the ajax request
     else {
       console.log(removed);
-      res.send(removed);
+      //res.send(removed);
+      res.redirect('/articles');
     }
   });
 });

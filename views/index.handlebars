@@ -1,6 +1,8 @@
 <div id="wrapper">
   <h1>Note Scraper</h1>
   <h2><i>If you can do this...the homework should be no problem.</i></h2>
-  <div id="articles"></div>
-  <div id="notes"></div>
+  {{#each doc}}
+    <a class="articles" href="/delete/{{this._id}}" data-id="{{this._id}}">Article</a>
+    <div class="notes">Note</div>
+  {{/each}}
 </div>
