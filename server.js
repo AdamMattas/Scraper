@@ -27,7 +27,6 @@ app.set('view engine', 'handlebars');
 // make public a static dir
 app.use(express.static(process.cwd() + '/public'));
 
-
 // Database configuration with mongoose
 mongoose.connect('mongodb://heroku_kjck5jc1:gjv3mdvolm8equegiel2r60nrb@ds019936.mlab.com:19936/heroku_kjck5jc1');
 var db = mongoose.connection;
@@ -42,11 +41,9 @@ db.once('open', function() {
   console.log('Mongoose connection successful.');
 });
 
-
 // And we bring in our Note and Article models
 var Note = require('./models/Note.js');
 var Article = require('./models/Article.js');
-
 
 // Routes
 // ======
@@ -63,36 +60,41 @@ app.get('/home', function (req, res) {
 // A GET request to scrape the echojs website.
 app.get('/scrape', function(req, res) {
   // first, we grab the body of the html with request
-  request('http://www.echojs.com/', function(error, response, html) {
+  request('http://www.cnn.com/specials/politics/world-politics', function(error, response, html) {
     // then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(html);
     // now, we grab every h2 within an article tag, and do the following:
-    $('article h2').each(function(i, element) {
+    $('article .cd__wrapper .cd__content .cd__auxiliary').each(function(i, element) {
 
         // save an empty result object
         var result = {};
 
         // add the text and href of every link, 
         // and save them as properties of the result obj
-        result.title = $(this).children('a').text();
-        result.link = $(this).children('a').attr('href');
+        result.title = $(this).parent().children('.cd__headline').children('a').children('span.cd__headline-text').text();
+        result.link = $(this).parent().prev().children('a').attr('href');
+        result.image = $(this).parent().prev().children('a').children('img.media__image').attr('data-src-medium');
+        result.auxiliary = $(this).text();
+        result.description = $(this).next().text();
+
+        console.log('HELLO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', result);
 
         // using our Article model, create a new entry.
         // Notice the (result):
         // This effectively passes the result object to the entry (and the title and link)
-        var entry = new Article (result);
+        //var entry = new Article (result);
 
         // now, save that entry to the db
-        entry.save(function(err, doc) {
-          // log any errors
-          if (err) {
-            console.log(err);
-          } 
-          // or log the doc
-          else {
-            console.log(doc);
-          }
-        });
+        // entry.save(function(err, doc) {
+        //   // log any errors
+        //   if (err) {
+        //     console.log(err);
+        //   } 
+        //   // or log the doc
+        //   else {
+        //     console.log(doc);
+        //   }
+        // });
 
 
     });
@@ -136,7 +138,6 @@ app.get('/articles/:id', function(req, res){
   });
 });
 
-
 // replace the existing note of an article with a new one
 // or if no note exists for an article, make the posted note it's note.
 app.post('/articles/:id', function(req, res){
@@ -146,7 +147,7 @@ app.post('/articles/:id', function(req, res){
   // and save the new note the db
   newNote.save(function(err, doc){
     // log any errors
-    if(err){
+    if (err){
       console.log(err);
     } 
     // otherwise
@@ -165,6 +166,25 @@ app.post('/articles/:id', function(req, res){
           res.send(doc);
         }
       });
+    }
+  });
+});
+
+// Delete One from the DB
+app.get('/delete', function(req, res) {
+  // remove a note using the objectID
+  Article.remove({_id: "57cfccebf8ba1324d8db2037"
+  }, function(err, removed) {
+    // log any errors from mongojs
+    if (err) {
+      console.log(err);
+      res.send(err);
+    } 
+    // otherwise, send the mongojs response to the browser.
+    // this will fire off the success function of the ajax request
+    else {
+      console.log(removed);
+      res.send(removed);
     }
   });
 });
