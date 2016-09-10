@@ -83,10 +83,10 @@ app.get('/scrape', function(req, res) {
         // Notice the (result):
         // This effectively passes the result object to the entry (and the title and link)
         var entry = new Article (result);
-        console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', entry);
+        console.log(entry);
         Article.count({'title': entry.title}, function (err, count){ 
           if(count>0){
-              console.log('Already Exists !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+              console.log('Already exists!');
           }else{
             // now, save that entry to the db
             entry.save(function(err, doc) {
@@ -125,30 +125,6 @@ app.get('/articles', function(req, res){
     }
   });
 });
-
-// grab an article by it's ObjectId
-// app.get('/articles/:id', function(req, res){
-//   // using the id passed in the id parameter, 
-//   // prepare a query that finds the matching one in our db...
-//   Article.findOne({'_id': req.params.id})
-//   // and populate all of the notes associated with it.
-//   .populate('note')
-//   // now, execute our query
-//   .exec(function(err, doc){
-//     console.log(doc);
-//     // log any errors
-//     if (err){
-//       console.log(err);
-//     } 
-//     // otherwise, send the doc to the browser as a json object
-//     else {
-//       //res.json(doc);
-//       res.render('article', {
-//         doc: doc
-//       });
-//     }
-//   });
-// });
 
 app.get('/articles/:id', function(req, res){
   // using the id passed in the id parameter, 

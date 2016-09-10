@@ -1,3 +1,46 @@
+$(document).on('ready', function(){
+
+  var slideIndex = 1;
+  var infoIndex = 1;
+  showImages(slideIndex);
+  showInfo(slideIndex);
+
+  $('.move-btns').on('click', function(){
+
+    var direction = $(this).attr('data-move');
+    var move = Number(direction);
+    console.log(move);
+
+    showImages(slideIndex += move);
+    showInfo(infoIndex += move);
+
+  });
+
+  function showImages(n) {
+    var i;
+    var x = document.getElementsByClassName("slides");
+    if (n > x.length) {slideIndex = 1}
+    if (n < 1) {slideIndex = x.length}
+    for (i = 0; i < x.length; i++) {
+       x[i].style.display = "none";
+    }
+    x[slideIndex-1].style.display = "block";
+  }
+
+  function showInfo(n) {
+    var i;
+    var y = document.getElementsByClassName("info");
+    if (n > y.length) {infoIndex = 1}
+    if (n < 1) {infoIndex = y.length}
+    for (i = 0; i < y.length; i++) {
+       y[i].style.display = "none";
+    }
+    y[infoIndex-1].style.display = "block";
+  }
+
+});
+
+
 // grab the articles as a json
 $.getJSON('/articles', function(data) {
   // for each one
@@ -6,19 +49,6 @@ $.getJSON('/articles', function(data) {
     $('#articles').append('<p data-id="' + data[i]._id + '">'+ data[i].title + '<br />'+ data[i].link + '</p>');
   }
 });
-
-// $(document).on('click', '.articles', function(){
-
-//   var thisId = $(this).attr('data-id');
-
-//   // now make an ajax call for the Article
-//   $.ajax({
-//     method: "GET",
-//     url: "/delete/" + thisId,
-//   }); 
-
-// });
-
 
 // whenever someone clicks a p tag
 $(document).on('click', 'p', function(){
