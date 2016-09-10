@@ -1,9 +1,13 @@
 $(document).on('ready', function(){
 
-  var slideIndex = 1;
-  var infoIndex = 1;
+  var slideIndex = 1,
+  infoAuxIndex = 1,
+  infoTitleIndex = 1,
+  infoTitleDesc = 1;
   showImages(slideIndex);
-  showInfo(slideIndex);
+  showInfoAux(infoAuxIndex);
+  showInfoTitle(infoTitleIndex);
+  showInfoDesc(infoTitleDesc);
 
   $('.move-btns').on('click', function(){
 
@@ -12,7 +16,9 @@ $(document).on('ready', function(){
     console.log(move);
 
     showImages(slideIndex += move);
-    showInfo(infoIndex += move);
+    showInfoAux(infoAuxIndex += move);
+    showInfoTitle(infoTitleIndex += move);
+    showInfoDesc(infoTitleDesc += move);
 
   });
 
@@ -27,28 +33,50 @@ $(document).on('ready', function(){
     x[slideIndex-1].style.display = "block";
   }
 
-  function showInfo(n) {
+  function showInfoAux(n) {
     var i;
-    var y = document.getElementsByClassName("info");
-    if (n > y.length) {infoIndex = 1}
-    if (n < 1) {infoIndex = y.length}
+    var y = document.getElementsByClassName("info-aux");
+    if (n > y.length) {infoAuxIndex = 1}
+    if (n < 1) {infoAuxIndex = y.length}
     for (i = 0; i < y.length; i++) {
        y[i].style.display = "none";
     }
-    y[infoIndex-1].style.display = "block";
+    y[infoAuxIndex-1].style.display = "block";
+  }
+
+  function showInfoTitle(n) {
+    var i;
+    var y = document.getElementsByClassName("info-title");
+    if (n > y.length) {infoTitleIndex = 1}
+    if (n < 1) {infoTitleIndex = y.length}
+    for (i = 0; i < y.length; i++) {
+       y[i].style.display = "none";
+    }
+    y[infoTitleIndex-1].style.display = "block";
+  }
+
+  function showInfoDesc(n) {
+    var i;
+    var y = document.getElementsByClassName("info-description");
+    if (n > y.length) {infoTitleDesc = 1}
+    if (n < 1) {infoTitleDesc = y.length}
+    for (i = 0; i < y.length; i++) {
+       y[i].style.display = "none";
+    }
+    y[infoTitleDesc-1].style.display = "block";
   }
 
 });
 
 
 // grab the articles as a json
-$.getJSON('/articles', function(data) {
-  // for each one
-  for (var i = 0; i<data.length; i++){
-    // display the apropos information on the page
-    $('#articles').append('<p data-id="' + data[i]._id + '">'+ data[i].title + '<br />'+ data[i].link + '</p>');
-  }
-});
+// $.getJSON('/articles', function(data) {
+//   // for each one
+//   for (var i = 0; i<data.length; i++){
+//     // display the apropos information on the page
+//     $('#articles').append('<p data-id="' + data[i]._id + '">'+ data[i].title + '<br />'+ data[i].link + '</p>');
+//   }
+// });
 
 // whenever someone clicks a p tag
 $(document).on('click', 'p', function(){

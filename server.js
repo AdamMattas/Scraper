@@ -73,7 +73,7 @@ app.get('/scrape', function(req, res) {
         // and save them as properties of the result obj
         result.title = $(this).parent().children('.cd__headline').children('a').children('span.cd__headline-text').text();
         result.link = $(this).parent().prev().children('a').attr('href');
-        result.image = $(this).parent().prev().children('a').children('img.media__image').attr('data-src-medium');
+        result.image = $(this).parent().prev().children('a').children('img.media__image').attr('data-src-large');
         result.auxiliary = $(this).prev().text();
         result.description = $(this).text();
 

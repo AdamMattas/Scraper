@@ -1,31 +1,55 @@
-<div id="wrapper">
+<div class="main-wrapper">
+
+  <div class="header">
+    <div class="header-wrap">
+      <img class="logo" src="/assets/images/cnn_logo.png">
+      <div class="logo-write">World Politics</div>
+    </div>
+  </div>
 
   <div class="slide-wrapper">
 
-  {{#each doc}}
-    
-    <div class="slides">
-      <a href="/articles/{{this._id}}">
-        <img src="{{this.image}}">
-      </a>
-      <input class="titleinput" type="text" placeholder="Title">
-      <input class="bodyinput" type="text" placeholder="Body">
-      <a class="savenote" data-id="{{this._id}}">Post Comment</a>
-    </div>
+    {{#each doc}}
+      
+      <div class="slides">
+        <a href="/articles/{{this._id}}">
+          <img class="index-images" src="{{this.image}}">
+        </a>
+        <input class="titleinput" type="text" placeholder="Title">
+        <input class="bodyinput" type="text" placeholder="Body">
+        <a class="savenote" data-id="{{this._id}}">Post Comment</a>
+        <a class="articles" href="/delete/{{this._id}}" data-id="{{this._id}}">Delete Article</a>
+      </div>
 
-    <div class="info">
-      <h2>{{this.title}}</h2>
-      <h3>{{this.auxiliary}}</h3>
-      <p>{{this.description}}</p>
-      <div class="notes">{{this.note}}</div>
-      <a class="articles" href="/delete/{{this._id}}" data-id="{{this._id}}">Delete Article</a>
-    </div>
-    
-  {{/each}}
+      <div class="info">
+        <!-- <h2>{{this.title}}</h2> -->
+        <!-- <h3>{{this.auxiliary}}</h3> -->
+        <!-- <p>{{this.description}}</p> -->
+        <div class="notes">{{this.note}}</div>
+        
+      </div>
+      
+    {{/each}}
+
+    <a class="move-btns move-btn-left" data-move="-1">❮</a>
+    <a class="move-btns move-btn-right" data-move="1">❯</a>
 
   </div>
 
-  <a class="move-btns move-btn-left" data-move="-1">❮</a>
-  <a class="move-btns move-btn-right" data-move="1">❯</a>
+  <div class="footer-aux">
+    {{#each doc}}
+      <h3 class="info-aux">{{this.auxiliary}}</h3>
+    {{/each}}
+  </div>
+  <div class="footer-top">
+    {{#each doc}}
+      <h2 class="info-title">{{this.title}}</h2>
+    {{/each}}
+  </div>
+  <div class="footer-bottom">
+    {{#each doc}}
+      <p class="info-description">{{this.description}}</p>
+    {{/each}}
+  </div>
 
 </div>
