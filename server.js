@@ -13,6 +13,9 @@ var moment = require('moment');
 var request = require('request'); 
 var cheerio = require('cheerio');
 
+// Serve static content for the app from the "public" directory in the application directory.
+app.use(express.static(process.cwd() + '/public'));
+
 // use morgan and bodyparser with our app
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({
@@ -20,8 +23,10 @@ app.use(bodyParser.urlencoded({
 }));
 
 var exphbs = require('express-handlebars');
-
 var hbs = exphbs.create({
+  extname:'handlebars',
+  layoutsDir:  './views/layouts',
+  defaultLayout: 'main',
   // Specify helpers which are only registered on this instance.
   helpers: {
     trimString: function(passedString) {
@@ -84,13 +89,16 @@ var hbs = exphbs.create({
 
 });
 
-app.engine('handlebars', hbs.engine, exphbs({
-  defaultLayout: 'main'
-}));
-app.set('view engine', 'handlebars');
+// app.engine('handlebars', hbs.engine, exphbs({
+//   defaultLayout: 'main'
+// }));
+// app.set('view engine', 'handlebars');
 
-// make public a static dir
-app.use(express.static(process.cwd() + '/public'));
+// Initialize engine
+app.engine('handlebars', hbs.engine);
+
+// Set engine
+app.set('view engine', 'handlebars');
 
 // Database configuration with mongoose
 mongoose.connect('mongodb://heroku_kjck5jc1:gjv3mdvolm8equegiel2r60nrb@ds019936.mlab.com:19936/heroku_kjck5jc1');
