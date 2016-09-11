@@ -8,6 +8,8 @@
         <input class="bodyinput" type="text" placeholder="Body">
         <a class="savenote" data-id="{{this._id}}">Post Comment</a>
         {{#each ../docNote}}
+          <img class="party" src="{{partyType this.party}}">
+          
           <div class="title">{{this.title}}</div>
           <div class="body">{{this.body}}</div>
           <div class="date-time">{{prettifyDatetime this.date}}</div>

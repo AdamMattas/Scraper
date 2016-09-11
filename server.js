@@ -40,45 +40,33 @@ var hbs = exphbs.create({
     prettifyDatetime: function(timestamp) {
       return moment(timestamp).format('lll');
     },
-    starRating: function(rating) {
-      switch (rating) {
-        case 1:
-          rated = "/assets/images/stars_1.png";
-          break;
-        case 2:
-          rated = "/assets/images/stars_2.png";
-          break;
-        case 3:
-          rated = "/assets/images/stars_3.png";
-          break;
-        case 4:
-          rated = "/assets/images/stars_4.png";
-          break;
-        case 5:
-          rated = "/assets/images/stars_5.png";
-      }
-        return rated.toString();
-    },
-    noteType: function(type) {
+    partyType: function(type) {
       switch (type) {
-        case 1:
-          typeImage = "/assets/images/bid_accept_area.png";
+        case '1':
+          typeImage = "/assets/images/democrat.jpg";
           break;
-        case 2:
-          typeImage = "/assets/images/bid_reject_area.png";
+        case '2':
+          typeImage = "/assets/images/republican.jpg";
           break;
-        case 3:
-          typeImage = "/assets/images/bid_submit_area.png";
+        case '3':
+          typeImage = "/assets/images/libertarian.jpg";
           break;
-        case 4:
-          typeImage = "/assets/images/app_accept_area.png";
+        case '4':
+          typeImage = "/assets/images/green.jpg";
           break;
-        case 5:
-          typeImage = "/assets/images/app_submit_area.png";
+        case '5':
+          typeImage = "/assets/images/constitution.jpg";
           break;
-        case 6:
-          typeImage = "/assets/images/review_area.png";
+        case '6':
+          typeImage = "/assets/images/independent.jpg";
+          break;
+        case '7':
+          typeImage = "/assets/images/none.jpg";
+          break;
+        default:
+            typeImage = "/assets/images/none.jpg";
       }
+        console.log(typeImage);
         return typeImage.toString();
     },
     json: function(context) {
@@ -88,11 +76,6 @@ var hbs = exphbs.create({
   }
 
 });
-
-// app.engine('handlebars', hbs.engine, exphbs({
-//   defaultLayout: 'main'
-// }));
-// app.set('view engine', 'handlebars');
 
 // Initialize engine
 app.engine('handlebars', hbs.engine);

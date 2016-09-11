@@ -124,6 +124,7 @@ $(document).on('click', '.savenote', function(){
     data: {
       title: $('.titleinput').val(), // value taken from title input
       body: $('.bodyinput').val(), // value taken from note textarea
+      party: $('.partyinput').val(), // value taken from note dropdown
       artId: thisId
     }
   })

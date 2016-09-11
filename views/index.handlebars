@@ -17,6 +17,15 @@
         </a>
         <input class="titleinput" type="text" placeholder="Title">
         <textarea class="bodyinput" type="text" rows="5" placeholder="Body"></textarea>
+        <select class="partyinput">
+          <option value="1">Democratic Party</option>
+          <option value="2">Republican Party</option>
+          <option value="3">Libertarian Party</option>
+          <option value="4">Green Party</option>
+          <option value="5">Constitution Party</option>
+          <option value="6">Independent</option>
+          <option value="7">None of the Above</option>
+        </select>
         <a class="savenote" data-id="{{this._id}}">Post Comment</a>
         <a class="articles" href="/delete/{{this._id}}" data-id="{{this._id}}">Delete Article</a>
       </div>
