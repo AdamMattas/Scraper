@@ -79,6 +79,7 @@ h3{
 .slides{
   margin-top: 100px;
   width: 100%;
+  display: none;
 }
 
 .index-images{
