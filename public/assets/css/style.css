@@ -39,6 +39,10 @@ h3{
   font-weight: bold;
 }
 /*end global styling*/
+.hide{
+  display: none;
+}
+
 .main-wrapper{
   width: 100%;
 }
@@ -82,12 +86,19 @@ h3{
   max-width: 750px;
   /*border: 1px solid red;*/
   display: none;
+  z-index: 99;
+}
+
+.image-link{
+  position: relative;
+  font-size: 0;
 }
 
 .index-images{
   border: 1px solid #000000;
   border-right: 25px solid #000000;
-  border-left: 25px solid #000000;
+  border-left: 25px solid #d21f1f;
+  border-bottom: none;
   width: 100%;
 }
 
@@ -99,23 +110,130 @@ h3{
 
 .move-btn-left{
   position: absolute;
-  top: 35%;
+  padding: 25px 25px 25px 0;
+  top: 30%;
   left: 0;
+  z-index: 100;
 }
 
 .move-btn-right{
   position: absolute;
-  top: 35%;
+  padding: 25px 0 25px 25px;
+  top: 30%;
   right: 0;
+  z-index: 100;
+}
+
+.show-comment-form{
+  float: left;
+  position: relative;
+  top: -3px;
+  width: 49%;
+  font-size: 18px;
+  padding: 3px;
+  color: #ffffff;
+  background-color: #d21f1f;
+  border: 1px solid #d21f1f;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top: 2px solid #d21f1f;
+  margin-bottom: 25px;
+  text-align: center;
+  cursor: pointer; 
+}
+
+.show-comments{
+  float: right;
+  position: relative;
+  width: 49%;
+  font-size: 18px;
+  padding: 3px;
+  color: #ffffff;
+  background-color: #000000;
+  border: 1px solid #000000;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top: 2px solid #000000;
+  margin-bottom: 25px;
+  text-align: center;
+  cursor: pointer; 
+}
+
+.comment-pos-before{
+  top: -3px;
+}
+
+.comment-pos-after{
+  top: 2px;
+}
+
+.input-container{
+  position: relative;
+  margin-top: 30px;
+  background-color: #D9DBDB;
+  border: 1px solid #000000;
+  padding: 25px;
+}
+
+.titleinput{
+  width: 100%;
+  font-size: 16px;
+  padding: 5px;
+  margin-top: 3px;
+  border: 1px solid #000000;
 }
 
 .bodyinput{
   width: 100%;
+  font-size: 18px;
+  padding: 5px;
+  margin-top: 6px;
+  border: 1px solid #000000;
+}
+
+.partyinput{
+  width: 49%;
+  font-size: 18px;
+  padding: 3px;
+  margin-top: 3px;
+  border: 1px solid #000000;
+}
+
+.savenote{
+  float: right;
+  width: 49%;
+  font-size: 18px;
+  padding: 6.5px;
+  margin-top: 3px;
+  background-color: #000000;
+  color: #ffffff;
+  text-align: center;
+  cursor: pointer;
 }
 
 .info-title{
   margin-top: 0;
   margin-bottom: 0;
+}
+
+.comment-container{
+  position: relative;
+  max-width: 750px;
+  margin-top: 30px;
+  /*top: 3px;*/
+  background-color: #D9DBDB;
+  border: 1px solid #000000;
+  padding: 25px;
+}
+
+.extra-margin{
+  margin-top: 223px; 
+}
+
+.comp-foot-wrap{
+  position: relative;
+  margin-top: 100px;
+  min-height: 200px;
 }
 
 .footer-aux{

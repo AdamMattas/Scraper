@@ -12,57 +12,69 @@
     {{#each doc}}
       
       <div class="slides">
-        <a href="/articles/{{this._id}}">
-          <span class="move-btns move-btn-left" data-move="-1" title="Previous Article">❮</span>
-          <span class="move-btns move-btn-right" data-move="1" title="Next Article">❯</span>
+        <span class="move-btns move-btn-left" data-move="-1" title="Previous Article">❮</span>
+        <span class="move-btns move-btn-right" data-move="1" title="Next Article">❯</span>
+        <a class="image-link" href="/articles/{{this._id}}">
           <img class="index-images" src="{{this.image}}">
         </a>
-        <input class="titleinput" type="text" placeholder="Title">
-        <textarea class="bodyinput" type="text" rows="5" placeholder="Body"></textarea>
-        <select class="partyinput">
-          <option value="0">Select an option</option>
-          <option value="1">Democratic Party</option>
-          <option value="2">Republican Party</option>
-          <option value="3">Libertarian Party</option>
-          <option value="4">Green Party</option>
-          <option value="5">Constitution Party</option>
-          <option value="6">Independent</option>
-          <option value="7">None of the Above</option>
-        </select>
-        <a class="savenote" data-id="{{this._id}}">Post Comment</a>
-        <a class="articles" href="/delete/{{this._id}}" data-id="{{this._id}}">Delete Article</a>
-      </div>
-
-      <div class="info">
-
-        <!-- <div class="notes">{{this.note}}</div> -->
-        
+        <div class="input-container hide">
+          <form>
+            <input class="titleinput" type="text" placeholder="Display Name">
+            <textarea class="bodyinput" type="text" rows="4" placeholder="Your comment goes here..."></textarea>
+            <select class="partyinput">
+              <option value="0">Party Affiliation</option>
+              <option value="1">Democratic Party</option>
+              <option value="2">Republican Party</option>
+              <option value="3">Libertarian Party</option>
+              <option value="4">Green Party</option>
+              <option value="5">Constitution Party</option>
+              <option value="6">Independent</option>
+              <option value="7">None of the Above</option>
+            </select>
+            <div class="savenote" data-id="{{this._id}}">Post Comment</div>
+          </form>
+        </div>
+        <div class="show-comment-form">Post Comments</div>
+        <div class="show-comments comment-pos-before">Show Comments</div>
+        <!-- <a class="articles" href="/delete/{{this._id}}" data-id="{{this._id}}">Delete Article</a> -->
       </div>
       
     {{/each}}
 
+    <div class="comment-container hide">
+
+      <!-- <div class="notes">{{this.note}}</div> -->
+      
+    </div>
+
   </div>
 
-  <div class="footer-aux">
-    <div class="foot-aux-wrap">
-      {{#each doc}}
-        <h3 class="info-aux">{{this.auxiliary}}</h3>
-      {{/each}}
+  <div class="extra-margin"></div>
+
+  <div class="comp-foot-wrap">
+
+    <div class="footer-aux">
+      <div class="foot-aux-wrap">
+        {{#each doc}}
+          <h3 class="info-aux">{{this.auxiliary}}</h3>
+        {{/each}}
+      </div>
     </div>
-  </div>
-  <div class="footer-top"> 
-    <div class="foot-top-wrap">
-      {{#each doc}}
-        <h2 class="info-title">{{this.title}}</h2>
-      {{/each}}
+    <div class="footer-top"> 
+      <div class="foot-top-wrap">
+        {{#each doc}}
+          <h2 class="info-title">{{this.title}}</h2>
+        {{/each}}
+      </div>
     </div>
-  </div>
-  <div class="footer-bottom"> 
-    <div class="foot-bottom-wrap">
-      {{#each doc}}
-        <p class="info-description">{{this.description}}</p>
-      {{/each}}
-    </div>  
+    <div class="footer-bottom"> 
+      <div class="foot-bottom-wrap">
+        {{#each doc}}
+          <p class="info-description">{{this.description}}</p>
+        {{/each}}
+      </div>  
+    </div>
+
   </div>
 
 </div>
