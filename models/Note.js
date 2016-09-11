@@ -14,6 +14,11 @@ var NoteSchema = new Schema({
     type:String
   },
   // just a string
+  date: {
+    type:Date,
+    default:Date.now
+  },
+  // just a string
   artId: {
     type:String
   }

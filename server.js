@@ -8,6 +8,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
+var moment = require('moment');
 // Notice: Our scraping tools are prepared, too
 var request = require('request'); 
 var cheerio = require('cheerio');
@@ -19,7 +20,71 @@ app.use(bodyParser.urlencoded({
 }));
 
 var exphbs = require('express-handlebars');
-app.engine('handlebars', exphbs({
+
+var hbs = exphbs.create({
+  // Specify helpers which are only registered on this instance.
+  helpers: {
+    trimString: function(passedString) {
+      var str = passedString.substring(0,725);
+      str = (str.slice(0,-3) + '. . .');
+      return str
+    },
+    prettifyDate: function(timestamp) {
+      return moment(timestamp).format('MMMM Do YYYY');
+    },
+    prettifyDatetime: function(timestamp) {
+      return moment(timestamp).format('lll');
+    },
+    starRating: function(rating) {
+      switch (rating) {
+        case 1:
+          rated = "/assets/images/stars_1.png";
+          break;
+        case 2:
+          rated = "/assets/images/stars_2.png";
+          break;
+        case 3:
+          rated = "/assets/images/stars_3.png";
+          break;
+        case 4:
+          rated = "/assets/images/stars_4.png";
+          break;
+        case 5:
+          rated = "/assets/images/stars_5.png";
+      }
+        return rated.toString();
+    },
+    noteType: function(type) {
+      switch (type) {
+        case 1:
+          typeImage = "/assets/images/bid_accept_area.png";
+          break;
+        case 2:
+          typeImage = "/assets/images/bid_reject_area.png";
+          break;
+        case 3:
+          typeImage = "/assets/images/bid_submit_area.png";
+          break;
+        case 4:
+          typeImage = "/assets/images/app_accept_area.png";
+          break;
+        case 5:
+          typeImage = "/assets/images/app_submit_area.png";
+          break;
+        case 6:
+          typeImage = "/assets/images/review_area.png";
+      }
+        return typeImage.toString();
+    },
+    json: function(context) {
+      return JSON.stringify(context);
+    } 
+
+  }
+
+});
+
+app.engine('handlebars', hbs.engine, exphbs({
   defaultLayout: 'main'
 }));
 app.set('view engine', 'handlebars');
@@ -85,7 +150,7 @@ app.get('/scrape', function(req, res) {
         var entry = new Article (result);
         console.log(entry);
         Article.count({'title': entry.title}, function (err, count){ 
-          if(count>0){
+          if(count > 0){
               console.log('Already exists!');
           }else{
             // now, save that entry to the db

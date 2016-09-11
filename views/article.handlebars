@@ -10,6 +10,7 @@
         {{#each ../docNote}}
           <div class="title">{{this.title}}</div>
           <div class="body">{{this.body}}</div>
+          <div class="date-time">{{prettifyDatetime this.date}}</div>
           <a href="/delete/note/{{this._id}}">Delete Note</a>
         {{/each}}
         <a class="articles" href="/delete/{{this._id}}" data-id="{{this._id}}">Delete Article</a>

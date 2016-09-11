@@ -78,13 +78,13 @@ h3{
 
 .slides{
   margin-top: 100px;
-  width: 100%;
+  max-width: 750px;
   display: none;
 }
 
 .index-images{
   border: 1px solid #000000;
-  max-width: 750px;
+  width: 100%;
 }
 
 .move-btns{
@@ -102,6 +102,10 @@ h3{
   position: absolute;
   top: 45%;
   right: 0;
+}
+
+.bodyinput{
+  width: 100%;
 }
 
 .footer-aux{
