@@ -175,6 +175,7 @@ app.get('/articles', function(req, res){
     // or send the doc to the browser as a json object
     else {
       //res.json(doc);
+      console.log(doc);
       res.render('index', {
         doc: doc
       });
@@ -232,6 +233,25 @@ app.get('/notes/:id', function(req, res){
 });
 
 // grab an article by it's ObjectId
+app.post('/update/:id', function(req, res){
+  // using the id passed in the id parameter, 
+  // prepare a query that finds the matching one in our db...
+  Article.findOneAndUpdate({'_id': req.params.id}, {$set: {note: 1}})
+  // and populate all of the notes associated with it.
+  // now, execute our query
+  .exec(function(err, doc){
+    // log any errors
+    if (err){
+      console.log(err);
+    } 
+    // otherwise, send the doc to the browser as a json object
+    else {
+      res.json(doc);
+    }
+  });
+});
+
+// grab an article by it's ObjectId
 app.get('/notes', function(req, res){
   // using the id passed in the id parameter, 
   // prepare a query that finds the matching one in our db...
@@ -266,6 +286,19 @@ app.post('/articles/:id', function(req, res){
     // otherwise
     else {
       console.log(doc);
+      Article.findOneAndUpdate({'_id': req.params.id}, {$set: {note: 1}})
+      // and populate all of the notes associated with it.
+      // now, execute our query
+      .exec(function(err, doc){
+        // log any errors
+        if (err){
+          console.log(err);
+        } 
+        // otherwise, send the doc to the browser as a json object
+        else {
+          res.json(doc);
+        }
+      });
     }
   });
 });
@@ -313,7 +346,7 @@ app.get('/delete/note/:id', function(req, res) {
 // Delete One from the DB
 app.get('/note/manual', function(req, res) {
   // remove a note using the objectID
-  Note.remove({_id: ""
+  Note.remove({_id: "57d268e5547d0d36b46ab1d1"
   }, function(err, removed) {
     // log any errors from mongojs
     if (err) {

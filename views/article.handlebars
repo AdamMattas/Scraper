@@ -1,6 +1,4 @@
 <div id="wrapper">
-  <h1>Note Scraper</h1>
-  <h2><i>If you can do this...the homework should be no problem.</i></h2>
   {{#doc}}
     <div>
       <img src="{{this.image}}">
@@ -9,7 +7,6 @@
         <a class="savenote" data-id="{{this._id}}">Post Comment</a>
         {{#each ../docNote}}
           <img class="party" src="{{partyType this.party}}">
-          
           <div class="title">{{this.title}}</div>
           <div class="body">{{this.body}}</div>
           <div class="date-time">{{prettifyDatetime this.date}}</div>

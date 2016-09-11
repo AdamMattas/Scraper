@@ -13,11 +13,14 @@
       
       <div class="slides">
         <a href="/articles/{{this._id}}">
+          <span class="move-btns move-btn-left" data-move="-1" title="Previous Article">❮</span>
+          <span class="move-btns move-btn-right" data-move="1" title="Next Article">❯</span>
           <img class="index-images" src="{{this.image}}">
         </a>
         <input class="titleinput" type="text" placeholder="Title">
         <textarea class="bodyinput" type="text" rows="5" placeholder="Body"></textarea>
         <select class="partyinput">
+          <option value="0">Select an option</option>
           <option value="1">Democratic Party</option>
           <option value="2">Republican Party</option>
           <option value="3">Libertarian Party</option>
@@ -31,34 +34,35 @@
       </div>
 
       <div class="info">
-        <!-- <h2>{{this.title}}</h2> -->
-        <!-- <h3>{{this.auxiliary}}</h3> -->
-        <!-- <p>{{this.description}}</p> -->
-        <div class="notes">{{this.note}}</div>
+
+        <!-- <div class="notes">{{this.note}}</div> -->
         
       </div>
       
     {{/each}}
 
-    <a class="move-btns move-btn-left" data-move="-1">❮</a>
-    <a class="move-btns move-btn-right" data-move="1">❯</a>
-
   </div>
 
   <div class="footer-aux">
-    {{#each doc}}
-      <h3 class="info-aux">{{this.auxiliary}}</h3>
-    {{/each}}
+    <div class="foot-aux-wrap">
+      {{#each doc}}
+        <h3 class="info-aux">{{this.auxiliary}}</h3>
+      {{/each}}
+    </div>
   </div>
-  <div class="footer-top">
-    {{#each doc}}
-      <h2 class="info-title">{{this.title}}</h2>
-    {{/each}}
+  <div class="footer-top"> 
+    <div class="foot-top-wrap">
+      {{#each doc}}
+        <h2 class="info-title">{{this.title}}</h2>
+      {{/each}}
+    </div>
   </div>
-  <div class="footer-bottom">
-    {{#each doc}}
-      <p class="info-description">{{this.description}}</p>
-    {{/each}}
+  <div class="footer-bottom"> 
+    <div class="foot-bottom-wrap">
+      {{#each doc}}
+        <p class="info-description">{{this.description}}</p>
+      {{/each}}
+    </div>  
   </div>
 
 </div>
