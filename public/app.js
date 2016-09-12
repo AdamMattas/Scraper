@@ -1,5 +1,6 @@
 $(document).on('ready', function(){
 
+  //initialize vars and call functions to set the slider up
   var slideIndex = 1,
   infoAuxIndex = 1,
   infoTitleIndex = 1,
@@ -9,20 +10,22 @@ $(document).on('ready', function(){
   showInfoTitle(infoTitleIndex);
   showInfoDesc(infoTitleDesc);
 
+  //listens for click to move to the next or prev article
   $('.move-btns').on('click', function(){
 
     var direction = $(this).attr('data-move');
     var move = Number(direction);
     console.log(move);
 
-    showImages(slideIndex += move);
-    showInfoAux(infoAuxIndex += move);
-    showInfoTitle(infoTitleIndex += move);
-    showInfoDesc(infoTitleDesc += move);
-    emptyComments();
+    showImages(slideIndex += move); //moves to the next or prev article image
+    showInfoAux(infoAuxIndex += move); //moves to the next or prev article written by
+    showInfoTitle(infoTitleIndex += move); //moves to the next or prev article title
+    showInfoDesc(infoTitleDesc += move); //moves to the next or prev article description
+    emptyComments(); //empty in case comments are open
 
   });
 
+  //moves to the next or prev article image
   function showImages(n) {
     var i;
     var x = document.getElementsByClassName("slides");
@@ -34,6 +37,7 @@ $(document).on('ready', function(){
     x[slideIndex-1].style.display = "block";
   }
 
+  //moves to the next or prev article written by
   function showInfoAux(n) {
     var i;
     var y = document.getElementsByClassName("info-aux");
@@ -45,6 +49,7 @@ $(document).on('ready', function(){
     y[infoAuxIndex-1].style.display = "block";
   }
 
+  //moves to the next or prev article title
   function showInfoTitle(n) {
     var i;
     var y = document.getElementsByClassName("info-title");
@@ -56,6 +61,7 @@ $(document).on('ready', function(){
     y[infoTitleIndex-1].style.display = "block";
   }
 
+  //moves to the next or prev article description
   function showInfoDesc(n) {
     var i;
     var y = document.getElementsByClassName("info-description");
@@ -67,8 +73,8 @@ $(document).on('ready', function(){
     y[infoTitleDesc-1].style.display = "block";
   }
 
+  //reset comments section when moving to a new article
   function emptyComments(){
-
     $('.extra-margin').removeClass('hide');
     $('.comment-container').empty();
     $('.comment-container').addClass('hide');
@@ -76,54 +82,22 @@ $(document).on('ready', function(){
     $('.show-comment-form').removeClass('hide');
     $('.show-comments').removeClass('hide');
     $('.show-comments').addClass('comment-pos-before');
-
   }
-
-  // whenever someone clicks a p tag
-  $(document).on('click', 'p', function(){
-    // empty the notes from the note section
-    $('#notes').empty();
-    // save the id from the p tag
-    var thisId = $(this).attr('data-id');
-
-    // now make an ajax call for the Article
-    $.ajax({
-      method: "GET",
-      url: "/articles/" + thisId,
-    })
-      // with that done, add the note information to the page
-      .done(function( data ) {
-        console.log(data);
-        // the title of the article
-        $('#notes').append('<h2>' + data.title + '</h2>'); 
-        // an input to enter a new title
-        $('#notes').append('<input id="titleinput" name="title" >'); 
-        // a textarea to add a new note body
-        $('#notes').append('<textarea id="bodyinput" name="body"></textarea>'); 
-        // a button to submit a new note, with the id of the article saved to it
-        $('#notes').append('<button data-id="' + data._id + '" id="savenote">Save Note</button>');
-
-        // if there's a note in the article
-        if(data.note){
-          // place the title of the note in the title input
-          $('#titleinput').val(data.note.title);
-          // place the body of the note in the body textarea
-          $('#bodyinput').val(data.note.body);
-        }
-      });
-  });
 
   // when you click the savenote button
   $(document).on('click', '.savenote', function(){
     // grab the id associated with the article from the submit button
     var thisId = $(this).attr('data-id');
 
+    //make sure form isn't empty
     if($('.titleinput').val() == '' || $('.bodyinput').val() == ''){
       alert('All fields required');
     }else{
 
+      //get dropdown menu value
       var type = $('.partyinput').val();
 
+      //assign image url based on value
       switch (type) {
         case '1':
           typeImage = "/assets/images/democrat.jpg";
@@ -150,7 +124,7 @@ $(document).on('ready', function(){
             typeImage = "/assets/images/none.jpg";
       }
 
-      // run a POST request to change the note, using what's entered in the inputs
+      // run a POST request to add the comment, using what's entered in the inputs
       $.ajax({
         method: "POST",
         url: "/articles/" + thisId,
@@ -161,7 +135,7 @@ $(document).on('ready', function(){
           artId: thisId
         }
       })
-        // with that done
+        // when that done
         .done(function( data ) {
           // log the response
           console.log(data);
@@ -179,6 +153,7 @@ $(document).on('ready', function(){
 
   });
 
+  //change classes to show the post comment form
   $(document).on('click', '.show-comment-form', function(){
 
     $('.input-container').removeClass('hide');
@@ -188,6 +163,8 @@ $(document).on('ready', function(){
 
   });
 
+  //when show comments button clicked
+  //get id saved in data-id and send as parameter to showComments function
   $(document).on('click', '.show-comments', function(){
 
     var slug = $(this).attr('data-id');
@@ -244,7 +221,7 @@ $(document).on('ready', function(){
           date.addClass('comment-date');
 
           remove = $('<a>');
-          remove.text('Delete Note');
+          remove.text('Delete Comment');
           remove.attr('href', '/delete/note/' + arr[i]._id);
           remove.addClass('comment-delete');
 
