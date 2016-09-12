@@ -19,6 +19,7 @@ $(document).on('ready', function(){
     showInfoAux(infoAuxIndex += move);
     showInfoTitle(infoTitleIndex += move);
     showInfoDesc(infoTitleDesc += move);
+    emptyComments();
 
   });
 
@@ -64,6 +65,18 @@ $(document).on('ready', function(){
        y[i].style.display = "none";
     }
     y[infoTitleDesc-1].style.display = "block";
+  }
+
+  function emptyComments(){
+
+    $('.extra-margin').removeClass('hide');
+    $('.comment-container').empty();
+    $('.comment-container').addClass('hide');
+    $('.input-container').addClass('hide');
+    $('.show-comment-form').removeClass('hide');
+    $('.show-comments').removeClass('hide');
+    $('.show-comments').addClass('comment-pos-before');
+
   }
 
   // whenever someone clicks a p tag
@@ -230,12 +243,18 @@ $(document).on('ready', function(){
           date.text(correctDate);
           date.addClass('comment-date');
 
+          remove = $('<a>');
+          remove.text('Delete Note');
+          remove.attr('href', '/delete/note/' + arr[i]._id);
+          remove.addClass('comment-delete');
+
           comment.append(image);
           comment.append(name);
           comment.append(body);
           comment.append(date);
 
           $('.comment-container').append(comment); //appends each notification to the marquee
+          $('.comment-container').append(remove); //appends each notification to the marquee
 
         }
 

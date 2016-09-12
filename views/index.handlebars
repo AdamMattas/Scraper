@@ -14,7 +14,7 @@
       <div class="slides">
         <span class="move-btns move-btn-left" data-move="-1" title="Previous Article">❮</span>
         <span class="move-btns move-btn-right" data-move="1" title="Next Article">❯</span>
-        <a class="image-link" href="/articles/{{this._id}}">
+        <a class="image-link" href="http://www.cnn.com{{this.link}}">
           <img class="index-images" src="{{this.image}}">
         </a>
         <div class="input-container hide">
@@ -35,7 +35,9 @@
           </form>
         </div>
         <div class="show-comment-form">Post Comments</div>
-        <div class="show-comments comment-pos-before" data-id="{{this._id}}">Show Comments</div>
+        {{#if note}}
+          <div class="show-comments comment-pos-before" data-id="{{this._id}}">Show Comments</div>
+        {{/if}}
         <!-- <a class="articles" href="/delete/{{this._id}}" data-id="{{this._id}}">Delete Article</a> -->
       </div>
       

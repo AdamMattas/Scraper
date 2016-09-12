@@ -29,50 +29,9 @@ var hbs = exphbs.create({
   defaultLayout: 'main',
   // Specify helpers which are only registered on this instance.
   helpers: {
-    trimString: function(passedString) {
-      var str = passedString.substring(0,725);
-      str = (str.slice(0,-3) + '. . .');
-      return str
-    },
-    prettifyDate: function(timestamp) {
-      return moment(timestamp).format('MMMM Do YYYY');
-    },
     prettifyDatetime: function(timestamp) {
       return moment(timestamp).format('lll');
-    },
-    partyType: function(type) {
-      switch (type) {
-        case '1':
-          typeImage = "/assets/images/democrat.jpg";
-          break;
-        case '2':
-          typeImage = "/assets/images/republican.jpg";
-          break;
-        case '3':
-          typeImage = "/assets/images/libertarian.jpg";
-          break;
-        case '4':
-          typeImage = "/assets/images/green.jpg";
-          break;
-        case '5':
-          typeImage = "/assets/images/constitution.jpg";
-          break;
-        case '6':
-          typeImage = "/assets/images/independent.jpg";
-          break;
-        case '7':
-          typeImage = "/assets/images/none.jpg";
-          break;
-        default:
-            typeImage = "/assets/images/none.jpg";
-      }
-        console.log(typeImage);
-        return typeImage.toString();
-    },
-    json: function(context) {
-      return JSON.stringify(context);
     } 
-
   }
 
 });
@@ -106,12 +65,8 @@ var Article = require('./models/Article.js');
 
 // redirects user to /home
 app.get('/', function (req, res) {
-  res.redirect('/articles');
+  res.redirect('/scrape');
 });
-
-// app.get('/home', function (req, res) {
-//     res.render('index');
-// });
 
 // A GET request to scrape the echojs website.
 app.get('/scrape', function(req, res) {
@@ -161,11 +116,12 @@ app.get('/scrape', function(req, res) {
     });
   });
   // tell the browser that we finished scraping the text.
-  res.send("Scrape Complete");
+  //res.send("Scrape Complete");
+  res.redirect('/index');
 });
 
 // this will get the articles we scraped from the mongoDB
-app.get('/articles', function(req, res){
+app.get('/index', function(req, res){
   // grab every doc in the Articles array
   Article.find({}, function(err, doc){
     // log any errors
@@ -179,6 +135,21 @@ app.get('/articles', function(req, res){
       res.render('index', {
         doc: doc
       });
+    }
+  });
+});
+
+// this will get the articles we scraped from the mongoDB
+app.get('/all', function(req, res){
+  // grab every doc in the Articles array
+  Article.find({}, function(err, doc){
+    // log any errors
+    if (err){
+      console.log(err);
+    } 
+    // or send the doc to the browser as a json object
+    else {
+      res.json(doc);
     }
   });
 });
@@ -318,7 +289,27 @@ app.get('/delete/:id', function(req, res) {
     else {
       console.log(removed);
       //res.send(removed);
-      res.redirect('/articles');
+      res.redirect('/index');
+    }
+  });
+});
+
+// Delete One article from the DB manually
+app.get('/article/manual', function(req, res) {
+  // remove a note using the objectID
+  Article.remove({_id: ""
+  }, function(err, removed) {
+    // log any errors from mongojs
+    if (err) {
+      console.log(err);
+      res.send(err);
+    } 
+    // otherwise, send the mongojs response to the browser.
+    // this will fire off the success function of the ajax request
+    else {
+      console.log(removed);
+      //res.send(removed);
+      res.redirect('/index');
     }
   });
 });
@@ -337,36 +328,32 @@ app.get('/delete/note/:id', function(req, res) {
     // this will fire off the success function of the ajax request
     else {
       console.log(removed);
-      res.send(removed);
-      //res.redirect('/articles');
+      //res.send(removed);
+      res.redirect('/index');
     }
   });
 });
 
-// Delete One from the DB
-app.get('/note/manual', function(req, res) {
-  // remove a note using the objectID
-  Note.remove({_id: "57d268e5547d0d36b46ab1d1"
-  }, function(err, removed) {
-    // log any errors from mongojs
-    if (err) {
-      console.log(err);
-      res.send(err);
-    } 
-    // otherwise, send the mongojs response to the browser.
-    // this will fire off the success function of the ajax request
-    else {
-      console.log(removed);
-      res.send(removed);
-      //res.redirect('/articles');
-    }
-  });
-});
+// Delete One Note from the DB manually
+// app.get('/note/manual', function(req, res) {
+//   // remove a note using the objectID
+//   Note.remove({_id: ""
+//   }, function(err, removed) {
+//     // log any errors from mongojs
+//     if (err) {
+//       console.log(err);
+//       res.send(err);
+//     } 
+//     // otherwise, send the mongojs response to the browser.
+//     // this will fire off the success function of the ajax request
+//     else {
+//       console.log(removed);
+//       res.send(removed);
+//       //res.redirect('/articles');
+//     }
+//   });
+// });
 
 // listen on port 3000
 var port = process.env.PORT || 3000;
 app.listen(port);
-
-// app.listen(3000, function() {
-//   console.log('App running on port 3000!');
-// });
