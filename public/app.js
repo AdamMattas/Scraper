@@ -160,6 +160,8 @@ $(document).on('ready', function(){
       $('.titleinput').val("");
       $('.bodyinput').val("");
 
+      showComments(thisId);
+
     }
 
   });
@@ -176,8 +178,15 @@ $(document).on('ready', function(){
   $(document).on('click', '.show-comments', function(){
 
     var slug = $(this).attr('data-id');
+    showComments(slug);
+
+  });
+
+  function showComments(slug){
 
     var queryURL = "/notes/" + slug;
+
+    $('.comment-container').empty();
 
     //ajax makes request and returns the response
     $.ajax({url: queryURL, method: 'GET'}).done(function(response) {
@@ -189,9 +198,6 @@ $(document).on('ready', function(){
       for(var i = 0; i < response.length; i++){
         arr.push(response[i]);
       }
-
-      //var arr = Object.keys(response).map(function(k) { console.log(response[k]) });
-      //var arr = [response];
 
       //if (response) {
 
@@ -210,15 +216,19 @@ $(document).on('ready', function(){
 
           image = $('<img>');
           image.attr('src', arr[i].party);
+          image.addClass('comment-image');
 
           name = $('<h3>');
           name.text(arr[i].title);
+          name.addClass('comment-name');
 
           body = $('<p>');
           body.text(arr[i].body);
+          body.addClass('comment-body');
 
           date = $('<p>');
           date.text(correctDate);
+          date.addClass('comment-date');
 
           comment.append(image);
           comment.append(name);
@@ -237,7 +247,7 @@ $(document).on('ready', function(){
         
     });
 
-  });
+  }
 
 });
 
