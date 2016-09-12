@@ -217,7 +217,7 @@ app.get('/articles/:id', function(req, res){
 app.get('/notes/:id', function(req, res){
   // using the id passed in the id parameter, 
   // prepare a query that finds the matching one in our db...
-  Note.findOne({'_id': req.params.id})
+  Note.find({'artId': req.params.id})
   // and populate all of the notes associated with it.
   // now, execute our query
   .exec(function(err, doc){
@@ -227,7 +227,7 @@ app.get('/notes/:id', function(req, res){
     } 
     // otherwise, send the doc to the browser as a json object
     else {
-      res.json(doc);
+      res.send(doc);
     }
   });
 });

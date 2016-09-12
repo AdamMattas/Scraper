@@ -109,6 +109,34 @@ $(document).on('ready', function(){
       alert('All fields required');
     }else{
 
+      var type = $('.partyinput').val();
+
+      switch (type) {
+        case '1':
+          typeImage = "/assets/images/democrat.jpg";
+          break;
+        case '2':
+          typeImage = "/assets/images/republican.jpg";
+          break;
+        case '3':
+          typeImage = "/assets/images/libertarian.jpg";
+          break;
+        case '4':
+          typeImage = "/assets/images/green.jpg";
+          break;
+        case '5':
+          typeImage = "/assets/images/constitution.jpg";
+          break;
+        case '6':
+          typeImage = "/assets/images/independent.jpg";
+          break;
+        case '7':
+          typeImage = "/assets/images/none.jpg";
+          break;
+        default:
+            typeImage = "/assets/images/none.jpg";
+      }
+
       // run a POST request to change the note, using what's entered in the inputs
       $.ajax({
         method: "POST",
@@ -116,7 +144,7 @@ $(document).on('ready', function(){
         data: {
           title: $('.titleinput').val(), // value taken from title input
           body: $('.bodyinput').val(), // value taken from note textarea
-          party: $('.partyinput').val(), // value taken from note dropdown
+          party: typeImage, // value taken from note dropdown
           artId: thisId
         }
       })
@@ -147,9 +175,67 @@ $(document).on('ready', function(){
 
   $(document).on('click', '.show-comments', function(){
 
-    $('.show-comments').addClass('hide');
-    $('.comment-container').removeClass('hide');
-    $('.extra-margin').addClass('hide');
+    var slug = $(this).attr('data-id');
+
+    var queryURL = "/notes/" + slug;
+
+    //ajax makes request and returns the response
+    $.ajax({url: queryURL, method: 'GET'}).done(function(response) {
+
+      console.log(response);
+
+      var arr = [];
+
+      for(var i = 0; i < response.length; i++){
+        arr.push(response[i]);
+      }
+
+      //var arr = Object.keys(response).map(function(k) { console.log(response[k]) });
+      //var arr = [response];
+
+      //if (response) {
+
+        var comment;
+        var name;
+        var image;
+
+        for(var i = 0; i < arr.length; i++){
+
+          console.log(arr[i]);
+          var rawDate = arr[i].date;
+          var correctDate = moment(rawDate).format('lll');
+
+          comment = $('<div>'); //creates a span element
+          comment.addClass('comment-wrap'); //added class to span
+
+          image = $('<img>');
+          image.attr('src', arr[i].party);
+
+          name = $('<h3>');
+          name.text(arr[i].title);
+
+          body = $('<p>');
+          body.text(arr[i].body);
+
+          date = $('<p>');
+          date.text(correctDate);
+
+          comment.append(image);
+          comment.append(name);
+          comment.append(body);
+          comment.append(date);
+
+          $('.comment-container').append(comment); //appends each notification to the marquee
+
+        }
+
+        $('.show-comments').addClass('hide');
+        $('.comment-container').removeClass('hide');
+        $('.extra-margin').addClass('hide');
+
+      //}
+        
+    });
 
   });
 
