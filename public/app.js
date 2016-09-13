@@ -100,7 +100,7 @@ $(document).on('ready', function(){
     }else{
 
       //get dropdown menu value
-      var type = $('.partyinput').val();
+      var type = $('#party' + thisId).val();
 
       //assign image url based on value
       switch (type) {
