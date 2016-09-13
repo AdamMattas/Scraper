@@ -89,8 +89,13 @@ $(document).on('ready', function(){
     // grab the id associated with the article from the submit button
     var thisId = $(this).attr('data-id');
 
+    var titleInput = $('#title' + thisId).val();
+    var bodyInput = $('#body' + thisId).val();
+
+    console.log(titleInput, bodyInput);
+
     //make sure form isn't empty
-    if($('.titleinput').val() == '' || $('.bodyinput').val() == ''){
+    if(titleInput == '' || bodyInput == ''){
       alert('All fields required');
     }else{
 
@@ -129,8 +134,8 @@ $(document).on('ready', function(){
         method: "POST",
         url: "/articles/" + thisId,
         data: {
-          title: $('.titleinput').val(), // value taken from title input
-          body: $('.bodyinput').val(), // value taken from note textarea
+          title: $('#title' + thisId).val(), // value taken from title input
+          body: $('#body' + thisId).val(), // value taken from note textarea
           party: typeImage, // value taken from note dropdown
           artId: thisId
         }
@@ -144,8 +149,8 @@ $(document).on('ready', function(){
         });
 
       // Also, remove the values entered in the input and textarea for note entry
-      $('.titleinput').val("");
-      $('.bodyinput').val("");
+      $('#title' + thisId).val();
+      $('#body' + thisId).val();
 
       showComments(thisId);
 
@@ -189,12 +194,11 @@ $(document).on('ready', function(){
         arr.push(response[i]);
       }
 
-      //if (response) {
-
         var comment;
         var name;
         var image;
 
+        //loop through comments and build dynamic elements to hold them
         for(var i = 0; i < arr.length; i++){
 
           console.log(arr[i]);
@@ -238,8 +242,6 @@ $(document).on('ready', function(){
         $('.show-comments').addClass('hide');
         $('.comment-container').removeClass('hide');
         $('.extra-margin').addClass('hide');
-
-      //}
         
     });
 
