@@ -60,7 +60,13 @@
         <img class="logo-2" src="/assets/images/cnn_logo_2.png">
       </div>
       <div class="cnn-block-middle"></div>
-      <div class="cnn-block-bottom"></div>
+      <div class="cnn-block-bottom">
+        <h2 class="dow-text">DOW</h2>
+        {{#dow}}
+          <img class="dow-image" src="{{dowImage this.number}}" />
+          <h2 class="dow-number">{{this.number}}</h2>
+        {{/dow}}
+      </div>
     </div>
 
     <div class="footer-aux">

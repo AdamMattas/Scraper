@@ -356,6 +356,26 @@ h3{
   right: 0px;
 }
 
+.dow-text {
+  position: absolute;
+  margin-top: 37px;
+  left: 40px;
+  color: #ffffff;
+}
+
+.dow-image {
+  position: absolute;
+  margin-top: 33px;
+  left: 130px;
+}
+
+.dow-number {
+  position: absolute;
+  margin-top: 37px;
+  right: 40px;
+  color: #ffffff;
+}
+
 @media (max-width: 985px) {
   .cnn-block-wrap {
     display: none;

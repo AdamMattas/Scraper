@@ -31,7 +31,25 @@ var hbs = exphbs.create({
   helpers: {
     prettifyDatetime: function(timestamp) {
       return moment(timestamp).format('lll');
-    } 
+    },
+    dowImage: function(image) {
+
+      var sign = image.split('');
+
+      var signSpot = sign[0];
+
+      var dowImage;
+
+      if(signSpot === '+') {
+        dowImage = "/assets/images/triangle_green.png";
+      } else if(signSpot === '-') {
+        dowImage = "/assets/images/triangle_red.png";  
+      } else {
+        dowImage = "/assets/images/triangle_yellow.png";
+      }
+
+      return dowImage;
+    },
   }
 
 });
@@ -130,7 +148,7 @@ app.get('/index', function(req, res){
     } 
     // or send the doc to the browser as a json object
     else {
-      dowJones(function(dow) {
+      dowJones(function(dow) { //Calls scraper below to get dow index number
         console.log(dow);
         //res.json(doc);
         // console.log(doc);
@@ -358,9 +376,6 @@ function dowJones(dow) {
 
   });
 
-
-  // if they aren't redirect them to the home page
-  // res.redirect('/');
 }
 
 // Delete One Note from the DB manually
