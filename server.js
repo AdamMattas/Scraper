@@ -150,11 +150,14 @@ app.get('/index', function(req, res){
     else {
       dowJones(function(dow) { //Calls scraper below to get dow index number
         console.log(dow);
-        //res.json(doc);
-        // console.log(doc);
-        res.render('index', {
-          doc: doc,
-          dow: dow
+        videos(function(vids) {
+          //res.json(doc);
+          // console.log(doc);
+          res.render('index', {
+            doc: doc,
+            dow: dow,
+            vids: vids
+          });
         });
       });
     }
@@ -373,6 +376,46 @@ function dowJones(dow) {
     });
 
     dow(result);
+
+  });
+
+}
+
+function videos(vids) {
+
+  request('http://www.cnn.com/specials/politics/world-politics', function(error, response, html) {
+
+    var $ = cheerio.load(html);
+    var result = [];
+    var title;
+    var link;
+    var image;
+
+    function Video(title, link, image) {
+
+      //properties and values are added to the empty object...
+      //created by the 'new' keyword when the function is invoked below
+      console.log(this); //logging 'this' shows empty object
+      //The 'this' keyword points to a new empty object that is returned from the function automatically
+      this.title = title; //assigned from passed parameter
+      this.link = link; //assigned from passed parameter
+      this.image = image; //assigned from passed parameter
+
+    }
+    // now, we grab the element by its ID
+    $('.cn__column article.cd.cd--card.cd--video.cd--medium.cd--vertical.cd--has-siblings.cd--has-media.cd--media__image').each(function(i, element) {    
+
+      title = $(this).children('.cd__wrapper').children('.cd__content').children('h3').children('a').children('.cd__headline-text').text();
+      link = $(this).children('.cd__wrapper').children('.media').children('a').attr('href');
+      image = $(this).children('.cd__wrapper').children('.media').children('a').children('img').attr('data-src-large');
+
+      var vid = new Video(title, link, image); 
+      result.push(vid);
+
+    });
+
+    console.log(result);
+    vids(result);
 
   });
 

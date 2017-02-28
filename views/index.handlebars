@@ -43,12 +43,27 @@
       
     {{/each}}
 
+    {{#each vids}}
+      <div class="vids">
+        <span class="move-vid-btns move-btn-left" data-move="-1" title="Previous Article">❮</span>
+        <span class="move-vid-btns move-btn-right" data-move="1" title="Next Article">❯</span>
+        <a class="vid-link" target="_blank" href="http://www.cnn.com{{this.link}}">
+          <div class="vid-title-wrap">
+            <h2 class="vid-title">{{this.title}}</h2>
+          </div>
+          <img class="vid-images" src="{{this.image}}" />
+        </a> 
+      </div>
+    {{/each}}
+
+  </div>
+
+  <div class="comment-holder">
     <div class="comment-container hide">
 
       <!-- <div class="notes">{{this.note}}</div> -->
       
     </div>
-
   </div>
 
   <div class="extra-margin"></div>

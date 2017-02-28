@@ -10,6 +10,9 @@ $(document).on('ready', function(){
   showInfoTitle(infoTitleIndex);
   showInfoDesc(infoTitleDesc);
 
+  var vidIndex = 1;
+  showVideos(vidIndex);
+
   //listens for click to move to the next or prev article
   $('.move-btns').on('click', function(){
 
@@ -24,6 +27,29 @@ $(document).on('ready', function(){
     emptyComments(); //empty in case comments are open
 
   });
+
+  //listens for click to move to the next or prev video
+  $('.move-vid-btns').on('click', function(){
+
+    var direction = $(this).attr('data-move');
+    var move = Number(direction);
+    console.log(move);
+
+    showVideos(vidIndex += move); //moves to the next or prev video
+
+  });
+
+  //moves to the next or prev article image
+  function showVideos(n) {
+    var i;
+    var x = document.getElementsByClassName("vids");
+    if (n > x.length) {vidIndex = 1}
+    if (n < 1) {vidIndex = x.length}
+    for (i = 0; i < x.length; i++) {
+       x[i].style.display = "none";
+    }
+    x[vidIndex-1].style.display = "block";
+  }
 
   //moves to the next or prev article image
   function showImages(n) {
