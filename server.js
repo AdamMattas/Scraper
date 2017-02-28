@@ -130,10 +130,14 @@ app.get('/index', function(req, res){
     } 
     // or send the doc to the browser as a json object
     else {
-      //res.json(doc);
-      console.log(doc);
-      res.render('index', {
-        doc: doc
+      dowJones(function(dow) {
+        console.log(dow);
+        //res.json(doc);
+        // console.log(doc);
+        res.render('index', {
+          doc: doc,
+          dow: dow
+        });
       });
     }
   });
@@ -333,6 +337,31 @@ app.get('/delete/note/:id', function(req, res) {
     }
   });
 });
+
+function dowJones(dow) {
+
+  request('https://www.google.com/finance?cid=983582', function(error, response, html) {
+
+    var $ = cheerio.load(html);
+
+    var result = {};
+    // now, we grab the element by its ID
+    $('#ref_983582_c').each(function(i, element) {
+      console.log('THIS!!!!!!!!!!!!!!!!!!!!!!!!!!');
+      console.log($(this).text());
+
+      result.number = $(this).text();
+
+    });
+
+    dow(result);
+
+  });
+
+
+  // if they aren't redirect them to the home page
+  // res.redirect('/');
+}
 
 // Delete One Note from the DB manually
 // app.get('/note/manual', function(req, res) {

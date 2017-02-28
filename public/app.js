@@ -1,33 +1,5 @@
 $(document).on('ready', function(){
 
-  var queryURL = "https://crossorigin.me/http://dev.markitondemand.com/MODApis/Api/v2/Quote/jsonp?symbol=x&callback=myFunction";
-  console.log(queryURL);
-  //sends the queryURL using get method using ajax 
-  $.ajax({url: queryURL, method: 'GET'})
-
-  //when done stores response as a parameter 
-  .done(function(response) {
-
-    console.log(response)
-
-    //for loop through results
-    // for (var i = 0; i < results.length; i++) {
-
-    //       //create div for each result
-    //   var article = $('<div');
-    //   article.addClass('className');
-
-    //       //create <h2> grab article title and add it as .text
-    //   var articleTitle = $('<h2>');
-    //   articleTitle.text(results[i].docs.headline.main);
-          
-    //       //create <p> grab summary and add it as .text
-    //       var articleSummary = $('<p>');
-    //       articleSummary.text(results[i].docs.lead_paragraph);
-    // }
-      
-  });
-
   //initialize vars and call functions to set the slider up
   var slideIndex = 1,
   infoAuxIndex = 1,
