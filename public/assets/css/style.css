@@ -95,7 +95,7 @@ h3{
 .vids {
   position: relative;
   margin-top: 25px;
-  padding-bottom: 50px;
+  /*padding-bottom: 50px;*/
   min-width: 49%;
   max-width: 750px;
   /* border: 1px solid red; */
@@ -110,7 +110,7 @@ h3{
   margin: 0px 25px 0px 25px;
   left: 0;
   right: 0;
-  bottom: 54px;
+  bottom: 55px;
   background-color: rgba(98, 98, 98, 0.3);
 }
 
@@ -122,8 +122,8 @@ h3{
 
 .vid-images{
   border: 1px solid #000000;
-  border-right: 25px solid #000000;
-  border-left: 25px solid #d21f1f;
+  border-left: 25px solid #000000;
+  border-right: 25px solid #d21f1f;
   border-bottom: none;
   width: 100%;
 }
@@ -175,6 +175,40 @@ h3{
   z-index: 100;
 }
 
+.border-holder-left {
+  float: left;
+  position: relative;
+  top: -3px;
+  width: 49%;
+  font-size: 18px;
+  padding: 3px;
+  color: #000000;
+  background-color: #000000;
+  border: 1px solid #000000;
+  /*border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;*/
+  border-top: 2px solid #000000;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.border-holder-right {
+  float: right;
+  position: relative;
+  top: -3px;
+  width: 49%;
+  font-size: 18px;
+  padding: 3px;
+  color: #d21f1f;
+  background-color: #d21f1f;
+  border: 1px solid #d21f1f;
+  /*border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;*/
+  border-top: 2px solid #d21f1f;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
 .show-comment-form{
   float: left;
   position: relative;
@@ -185,8 +219,8 @@ h3{
   color: #ffffff;
   background-color: #d21f1f;
   border: 1px solid #d21f1f;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
+  /*border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;*/
   border-top: 2px solid #d21f1f;
   margin-bottom: 25px;
   text-align: center;
@@ -202,8 +236,8 @@ h3{
   color: #ffffff;
   background-color: #000000;
   border: 1px solid #000000;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
+  /*border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;*/
   border-top: 2px solid #000000;
   margin-bottom: 25px;
   text-align: center;
