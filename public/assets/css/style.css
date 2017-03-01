@@ -128,6 +128,15 @@ h3{
   width: 100%;
 }
 
+.play-image {
+  position: absolute;
+  width: 35%;
+  margin: 0 auto;
+  left: 0px;
+  right: 0px;
+  top: 10%;
+}
+
 .slides{
   position: relative;
   margin-top: 25px;
