@@ -308,6 +308,11 @@ h3{
 .info-title{
   margin-top: 0;
   margin-bottom: 0;
+  display: none;
+}
+
+.info-description {
+  display: none;
 }
 
 .comment-container{
@@ -377,7 +382,9 @@ h3{
 }
 
 .info-aux {
-  /*padding-left: 10%;*/
+  margin-bottom: 0px;
+  margin-top: 15px;
+  display: none;
 }
 
 .foot-top-wrap{
