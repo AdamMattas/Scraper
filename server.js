@@ -34,7 +34,8 @@ var hbs = exphbs.create({
     },
     dowImage: function(image) {
 
-      var sign = image.split('');
+      var sign = image ? image.split('') : ['error'];
+      console.log('Sign Var: ', sign);
 
       var signSpot = sign[0];
 
@@ -149,7 +150,8 @@ app.get('/index', function(req, res){
     // or send the doc to the browser as a json object
     else {
       dowJones(function(dow) { //Calls scraper below to get dow index number
-        console.log(dow);
+        console.log("dowJones function running.");
+        console.log("DOW Callbac", dow);
         videos(function(vids) {
           //res.json(doc);
           // console.log(doc);
